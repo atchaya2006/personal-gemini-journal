@@ -1,0 +1,6 @@
+{
+  "name": "Personal Gemini Journal",
+  "description": "Differentiated AI Life-Reflection and Decision Intelligence platform with Socratic decision analysis, cross-journal pattern discovery, personal growth timeline, Firebase Auth, and zero-trust Firestore isolation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

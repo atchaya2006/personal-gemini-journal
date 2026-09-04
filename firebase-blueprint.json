@@ -1,0 +1,131 @@
+{
+  "entities": {
+    "JournalEntry": {
+      "title": "JournalEntry",
+      "description": "User-isolated mindful reflection and cognitive journal entry",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier for the journal entry" },
+        "userId": { "type": "string", "description": "UID of the owner" },
+        "title": { "type": "string", "maxLength": 300, "description": "Title of the entry" },
+        "content": { "type": "string", "maxLength": 50000, "description": "Main reflective markdown content" },
+        "mood": { "type": "string", "enum": ["grateful", "reflective", "joyful", "anxious", "overwhelmed", "peaceful", "energized", "serene", "fatigued", "frustrated", "neutral"] },
+        "moodScore": { "type": "number", "description": "Emotional valence score" },
+        "tags": { "type": "array", "description": "Taxonomy tags" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "isFavorite": { "type": "boolean" },
+        "summary": { "type": "string", "maxLength": 2000 },
+        "reframing": { "type": "string", "maxLength": 2000 },
+        "actionItem": { "type": "string", "maxLength": 1000 },
+        "dominantEmotions": { "type": "array" },
+        "wordCount": { "type": "number" },
+        "readingTimeMinutes": { "type": "number" }
+      },
+      "required": ["id", "userId", "title", "content", "mood", "createdAt"]
+    },
+    "DecisionItem": {
+      "title": "DecisionItem",
+      "description": "AI-assisted life and career decision analysis with options, assumptions, and outcomes",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string", "maxLength": 300 },
+        "description": { "type": "string", "maxLength": 10000 },
+        "category": { "type": "string", "enum": ["career", "life", "relationships", "wellbeing", "finance", "creativity", "philosophy"] },
+        "urgency": { "type": "string", "enum": ["low", "medium", "high"] },
+        "status": { "type": "string", "enum": ["evaluating", "decided", "post_reflection"] },
+        "options": { "type": "array" },
+        "emotionalConcerns": { "type": "array" },
+        "practicalConcerns": { "type": "array" },
+        "hiddenAssumptions": { "type": "array" },
+        "reflectiveQuestions": { "type": "array" },
+        "journalContextInsights": { "type": "array" },
+        "chosenOptionId": { "type": "string" },
+        "decisionRationale": { "type": "string" },
+        "postDecisionReview": { "type": "object" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "title", "description", "category", "status", "createdAt"]
+    },
+    "GrowthMilestone": {
+      "title": "GrowthMilestone",
+      "description": "Personal growth milestone, mindset shift, or breakthrough moment",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string", "maxLength": 300 },
+        "description": { "type": "string", "maxLength": 5000 },
+        "category": { "type": "string", "enum": ["mindset_shift", "breakthrough", "decision_point", "emotional_milestone", "life_transition"] },
+        "impactLevel": { "type": "string", "enum": ["transformational", "significant", "notable"] },
+        "date": { "type": "string" },
+        "keyLearning": { "type": "string" },
+        "tags": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "title", "category", "impactLevel", "date", "keyLearning"]
+    },
+    "PatternDiscovery": {
+      "title": "PatternDiscovery",
+      "description": "Cross-journal longitudinal cognitive loop and emotional anchor discovery",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "analyzedAt": { "type": "string", "format": "date-time" },
+        "entriesAnalyzedCount": { "type": "number" },
+        "cognitiveLoops": { "type": "array" },
+        "emotionalAnchors": { "type": "array" },
+        "peakClarityConditions": { "type": "array" },
+        "valueCongruenceScore": { "type": "number" },
+        "valueCongruenceBreakdown": { "type": "array" },
+        "behavioralCyclesSummary": { "type": "string" },
+        "actionableMicroHabits": { "type": "array" }
+      },
+      "required": ["id", "userId", "analyzedAt"]
+    },
+    "GrowthInsight": {
+      "title": "GrowthInsight",
+      "description": "Longitudinal psychological and emotional pattern report",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "generatedAt": { "type": "string", "format": "date-time" },
+        "periodLabel": { "type": "string" },
+        "overview": { "type": "string" },
+        "emotionalTrajectory": { "type": "string" },
+        "dominantThemes": { "type": "array" },
+        "cognitiveStrengths": { "type": "array" },
+        "mindfulRecommendations": { "type": "array" },
+        "resilienceScore": { "type": "number" }
+      },
+      "required": ["id", "userId", "generatedAt", "overview", "emotionalTrajectory"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/entries/{entryId}": {
+      "schema": { "$ref": "#/entities/JournalEntry" },
+      "description": "User-isolated subcollection for private journal entries"
+    },
+    "/users/{userId}/decisions/{decisionId}": {
+      "schema": { "$ref": "#/entities/DecisionItem" },
+      "description": "User-isolated subcollection for AI decision intelligence items"
+    },
+    "/users/{userId}/milestones/{milestoneId}": {
+      "schema": { "$ref": "#/entities/GrowthMilestone" },
+      "description": "User-isolated subcollection for personal growth timeline milestones"
+    },
+    "/users/{userId}/patterns/{patternId}": {
+      "schema": { "$ref": "#/entities/PatternDiscovery" },
+      "description": "User-isolated subcollection for cross-journal cognitive patterns"
+    },
+    "/users/{userId}/insights/{insightId}": {
+      "schema": { "$ref": "#/entities/GrowthInsight" },
+      "description": "User-isolated subcollection for psychological analysis reports"
+    }
+  }
+}

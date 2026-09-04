@@ -1,0 +1,45 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // User profile and data documents
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      
+      // User isolated journal reflections
+      match /entries/{entryId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+
+      // User isolated decision companion items
+      match /decisions/{decisionId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+
+      // User isolated growth timeline milestones
+      match /milestones/{milestoneId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+
+      // User isolated pattern discoveries
+      match /patterns/{patternId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+
+      // User isolated conversation history
+      match /conversations/{conversationId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+
+      // User isolated longitudinal growth insights
+      match /insights/{insightId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    // Default deny all other collections
+    match /{document=**} {
+      allow read, write: false;
+    }
+  }
+}
